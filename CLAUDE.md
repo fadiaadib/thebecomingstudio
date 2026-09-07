@@ -7,13 +7,17 @@ that reveal on scroll and expand into a full-screen detail overlay on click.
 
 It is **not** a normal static site and **not** a React/Vite project. It is a *Design Component*
 (`x-dc`) document rendered by `support.js`, a bundled runtime that compiles an HTML template plus
-a logic class into React at load time. There is no build step, no `package.json`, no node_modules,
-and no git repository.
+a logic class into React at load time. There is no build step, no `package.json` and no
+node_modules. It *is* a git repository, deployed to Cloudflare (see Deploying).
 
 ```
 index.html    the entire app — template + <script data-dc-script> logic + content data
 support.js    GENERATED dc-runtime bundle — do not edit (see below)
 logo.png wordmark.png grain.png portrait.png   assets referenced by relative path
+favicon.ico favicon-16.png favicon-32.png apple-touch-icon.png icon-512.png
+              icon set cut from logo.png; small sizes are contrast-stretched
+site.webmanifest   PWA manifest, referenced from the static <head>
+wrangler.toml .assetsignore   Cloudflare Worker config and its publish exclusions
 .thumbnail    WebP preview image written by the design tooling; not used at runtime
 ```
 
@@ -39,6 +43,16 @@ fails there but is caught and ignored — yet a real server is the reliable path
 
 There are no tests and nothing to lint. Verification is visual: load the page and check the
 reveal sequence, hover dimming, and the detail overlay open/close.
+
+## Deploying
+
+Pushing to `main` triggers Cloudflare Workers Builds, which runs `npx wrangler deploy` against an
+assets-only Worker named `thebecomingstudio` that owns the `thebecoming.studio` custom domain.
+Builds take roughly five minutes. `.assetsignore` decides what is published — anything not listed
+there is served at the site root, so a new file in this directory is public by default.
+
+`www` redirects to the apex via a Cloudflare Redirect Rule, not a Worker route, and HTTPS is
+forced by Always Use HTTPS. Neither lives in this repo.
 
 ## How a change flows
 
@@ -103,6 +117,13 @@ Manual DOM listeners (`scroll`, `resize`, `keydown`) and the `IntersectionObserv
 in `componentDidMount`. Every `setTimeout` is pushed onto `this._t` and cleared in
 `componentWillUnmount` — follow that pattern for any new timer, since the component can unmount
 and remount during editing.
+
+`_startField()` drives the hero canvas (`#bs-field`) on a `requestAnimationFrame` loop, and its
+handle lives on `this._raf` alongside a `resize` listener on `this._onFieldResize`; both are torn
+down in `componentWillUnmount`. It skips drawing once the hero scrolls out of view, and under
+`prefers-reduced-motion` it paints one static frame and never starts the loop. Note this loop stops
+Chrome's `--virtual-time-budget` from advancing, so headless screenshots freeze mid-animation
+unless you force the static path.
 
 ## Editor-exposed props (`data-props`)
 
