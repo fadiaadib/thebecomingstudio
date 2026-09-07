@@ -118,13 +118,6 @@ in `componentDidMount`. Every `setTimeout` is pushed onto `this._t` and cleared 
 `componentWillUnmount` — follow that pattern for any new timer, since the component can unmount
 and remount during editing.
 
-`_startField()` drives the hero canvas (`#bs-field`) on a `requestAnimationFrame` loop, and its
-handle lives on `this._raf` alongside a `resize` listener on `this._onFieldResize`; both are torn
-down in `componentWillUnmount`. It skips drawing once the hero scrolls out of view, and under
-`prefers-reduced-motion` it paints one static frame and never starts the loop. Note this loop stops
-Chrome's `--virtual-time-budget` from advancing, so headless screenshots freeze mid-animation
-unless you force the static path.
-
 ## Editor-exposed props (`data-props`)
 
 The `data-props` attribute on the script tag is HTML-escaped JSON declaring which props the design
@@ -151,7 +144,9 @@ Worth preserving when adding UI, because the page reads as one deliberate system
   `padding-left` to compensate for the trailing letter's space.
 - Structural rules are 1px lines animated via `transform: scaleX()` from a `transform-origin`,
   not width or opacity.
-- Sizes are `clamp()`/`min()` against viewport units rather than breakpoints — there is not a
-  single media query in the page.
+- Sizes are `clamp()`/`min()` against viewport units rather than breakpoints. The only media
+  queries are `.bs-grid` (one column, then three at 760px — `auto-fit` cannot skip a
+  two-column stage, and two columns strands Campaigns alone) and a `prefers-reduced-motion`
+  block. Reach for `clamp()` first; a breakpoint needs a reason like that one.
 - The grain overlay is a fixed, `pointer-events:none`, `mix-blend-mode:multiply` layer at
   `z-index:80`; it sits above content and must stay non-interactive.
