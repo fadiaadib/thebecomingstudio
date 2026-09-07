@@ -232,7 +232,7 @@
 const DATA = [
   { label: 'Apps', medium: 'Application', items: [
     { name: 'iVybe', logline: 'Discover your city through the people who love it.',
-      desc: 'iVybe is social discovery for the room you are actually in. Open it at a bar, a gig, a coffee shop and see who else is there right now and open to meeting someone. Pick what you are up for: dating, chatting, or making friends. You only ever see people who picked the same.',
+      desc: 'iVybe is social discovery for the room you are actually in. Open it at a bar, a gig, a coffee shop and see who else is there right now and open to meeting someone. Pick what you are up for: dating, chatting, or making friends. You only ever see people who picked the same. The interface is a sky rather than a list: other people arrive as stars, sharpen into rings as they come close, and the reach you send toward one of them is a Vybe.',
       kicker: 'First comes the Vybe, then comes the Bump.',
       status: 'Launching 18 September 2026',
       link: 'ivybe.app', href: 'https://ivybe.app',
@@ -251,9 +251,26 @@ const DATA = [
         { k: 'What you said in a chat', v: 'Gone with the chat' },
         { k: 'Your name, age and photo', v: 'The whole file' },
       ] },
-    { name: 'Capas', logline: 'Every cigar tells a story. Now they\u2019re catalogued.',
-      desc: 'A catalogue for a habit that has always been kept in notebooks and memory. Each entry holds the leaf, the origin, the occasion and the verdict. Over time the collection becomes a record of taste changing.',
-      status: 'In development' },
+    { name: 'Capas', logline: 'Every band tells a story.',
+      desc: 'A catalogue for a habit that has always lived in notebooks and memory. Photograph the band; two models read it, agree or defer, and the cigar takes its place in the cellar. Each entry holds the leaf, the origin, the occasion and the verdict. Over time the collection becomes a record of taste changing. Capas has no users \u2014 it has Collectors, and it is built as a society rather than a service.',
+      kicker: 'Know your cigar.',
+      status: 'In development',
+      modesTitle: 'The rooms',
+      modes: [
+        { n: 'Room 01', name: 'The Wrapper Read', line: 'Photograph the band. Two models read it and route by confidence.' },
+        { n: 'Room 02', name: 'The Cellar', line: 'Where every cigar rests. Every collection tells its owner\u2019s story.' },
+        { n: 'Room 03', name: 'The Aging Room', line: 'One cigar, its whole story. Some things improve with time.' },
+        { n: 'Room 04', name: 'The Smoke Log', line: 'Every smoke, every note. Where consumption becomes memoir.' },
+      ],
+      knowsTitle: 'House rules',
+      knows: [
+        { k: 'What it calls you', v: 'Collector, never user' },
+        { k: 'What it is', v: 'A society, not a service' },
+        { k: 'The name', v: 'Capa \u2014 the wrapper leaf' },
+        { k: 'The many you keep', v: 'Capas \u2014 the collection' },
+        { k: 'Reading a band', v: 'Two models, one verdict' },
+        { k: 'Founded', v: 'Est. 2026' },
+      ] },
   ]},
   { label: 'Stories', medium: 'Story', items: [
     { name: 'Blackmont', logline: 'A murder. An investigator. One devastating secret.',
