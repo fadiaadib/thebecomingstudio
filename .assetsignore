@@ -1,0 +1,11 @@
+# Files that live in the repo but must not be published to the site.
+# Same syntax as .gitignore. Everything else in this directory is uploaded.
+.git
+.github
+.gitignore
+.assetsignore
+.DS_Store
+._*
+.thumbnail
+CLAUDE.md
+wrangler.toml

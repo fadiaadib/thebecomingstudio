@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+._*
+
+# Wrangler / Cloudflare
+.wrangler/
+.dev.vars
+.dev.vars.*
+
+# Logs and editor cruft
+*.log
+.idea/
+.vscode/

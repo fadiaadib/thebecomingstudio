@@ -1,0 +1,17 @@
+# Cloudflare Worker serving this directory as static assets.
+# Must stay in sync with the existing Worker of the same name, which already
+# owns the thebecoming.studio custom domain.
+name = "thebecomingstudio"
+
+compatibility_date = "2026-09-07"
+
+# Assets-only Worker: no script, Cloudflare serves the files directly.
+# Exclusions are in .assetsignore.
+[assets]
+directory = "."
+
+# Binds the apex to this Worker. www is handled by the Redirect Rule, so it
+# does not need a route here.
+[[routes]]
+pattern = "thebecoming.studio"
+custom_domain = true
