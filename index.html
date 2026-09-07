@@ -99,7 +99,7 @@
       </div>
       <div style="display:flex; justify-content:space-between; align-items:baseline; gap:24px; padding-top:18px; font-size:9px; letter-spacing:0.4em; text-transform:uppercase; opacity:{{ wallLabelOpacity }}; transition:opacity 1400ms ease 300ms">
         <div style="padding-left:0.4em">The Gallery</div>
-        <div style="padding-left:0.4em; opacity:0.5">Eight works</div>
+        <div style="padding-left:0.4em; opacity:0.5">{{ worksLabel }}</div>
       </div>
 
       <div style="height:clamp(64px,11vh,132px)"></div>
@@ -271,6 +271,26 @@ const DATA = [
         { k: 'Reading a band', v: 'Two models, one verdict' },
         { k: 'Founded', v: 'Est. 2026' },
       ] },
+    { name: 'Work & Beans', logline: 'The anti-Starbucks Portland directory.',
+      desc: 'A curated directory of the best places to work in Portland. Not chains, and not co-working spaces with ping pong tables and vibes by committee. The real Portland — independent, funky, slightly mismatched furniture, good espresso, art on the walls, and a power plug under every table. An opinionated pro-local manifesto disguised as a directory.',
+      kicker: 'Local, weird, warm, and fully powered.',
+      status: 'Idea — domain purchased',
+      modesTitle: 'What earns a listing',
+      modes: [
+        { n: 'Test 01', name: 'The coffee', line: 'Independent roasters preferred. Never a chain.' },
+        { n: 'Test 02', name: 'The plugs', line: 'A power outlet under every table. Non-negotiable.' },
+        { n: 'Test 03', name: 'The internet', line: 'Reliable enough to work a whole day on.' },
+        { n: 'Test 04', name: 'The room', line: 'Cosy, local, weird in a good way.' },
+      ],
+      knowsTitle: 'At a glance',
+      knows: [
+        { k: 'City', v: 'Portland, Oregon' },
+        { k: 'Primary focus', v: 'Independent coffee shops' },
+        { k: 'Also listed', v: 'Libraries, lobbies, bookshops' },
+        { k: 'Never listed', v: 'Never a Starbucks' },
+        { k: 'The origin', v: 'Broadway and Alder' },
+        { k: 'Domain', v: 'workandbeans.com' },
+      ] },
   ]},
   { label: 'Stories', medium: 'Story', items: [
     { name: 'Blackmont', logline: 'A murder. An investigator. One devastating secret.',
@@ -381,6 +401,11 @@ const DATA = [
 ];
 
 const pad = (n) => (n < 10 ? '0' + n : String(n));
+
+// The wall label counts itself, so adding a work cannot leave it stale.
+const NUMBER_WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven',
+  'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen'];
+const spellCount = (n) => (NUMBER_WORDS[n] || String(n)) + (n === 1 ? ' work' : ' works');
 
 const BODY_TYPE = {
   'Instrument Serif italic': { family: "'Instrument Serif', Georgia, serif", style: 'italic' },
@@ -576,6 +601,7 @@ class Component extends DCLogic {
       close: () => this.close(),
       stopClose: (ev) => { if (ev && ev.stopPropagation) ev.stopPropagation(); },
       year: String(new Date().getFullYear()),
+      worksLabel: spellCount(TOTAL),
       inkWall: INK.wall,
       inkDetail: INK.detail,
       inkFoot: INK.foot,
